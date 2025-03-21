@@ -8,5 +8,7 @@
 
 valor=0
 
-read -p "Ingresá un valor del 1-5" valor
+read -n1 -p "Ingresá un valor del 1-5: " valor
+echo -e "/n"
+echo "El valor ingresado es $valor"
 
