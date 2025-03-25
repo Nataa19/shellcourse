@@ -1,25 +1,25 @@
-! /bin/bash
-Programa que permite manejar las utilidades de Postres
-Autor: Marco Toscano Freire - @martosfre
+!#/bin/bash
+#Programa que permite manejar las utilidades de Postres
+#Autor: Natanael Cantero
 opcion=0
 
-Función para instalar postgres
+#Función para instalar postgres
 instalar_postgres () {
     echo "Instalar postgres..."
 }
 
-Función para desinstalar postgres
+#Función para desinstalar postgres
 desinstalar_postgres () {
     echo "Desinstalar postres..."
 }
 
-Función para sacar un respaldo
+#Función para sacar un respaldo
 sacar_respaldo () {
     echo "Sacar respaldo..."
     echo "Directorio backup: $1"
 }
 
-Función para restaurar un respaldo
+#Función para restaurar un respaldo
 restaurarrespaldo () {
     echo "Restaurar respaldo..."
     echo "Directorio respaldo: $1"
