@@ -3,9 +3,9 @@
 #Autor: Natanael Cantero
 
 echo "Loops Anidados"
-for fil in $(ls)
+for fil in *
 do
-    for nombre in [1..4]
+    for nombre in {1..4}
     do
         echo "Nombre archivo:$fil _ $nombre"
     done

@@ -16,13 +16,13 @@ do
 done
 
 echo "Iterar en Archivos"
-for fil in
+for fil in *
 do
     echo "Nombre archivo:$fil"
 done
 
 echo "Iterar utilizando un comando"
-for fil in $(ls)
+for fil in $(ls -l)
 do
     echo "Nombre archivo:$fil"
 done
@@ -30,7 +30,7 @@ done
 echo "Iterar utilizando el formato tradcional"
 for ((i=1; i<10; i++))
 do
-    echo "Número;$i"
+    echo "Número:$i"
 done
 
 
