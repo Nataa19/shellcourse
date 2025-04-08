@@ -1,4 +1,10 @@
 #!/bin/bash
+#Me falta: 
+#Valdar la creacion de la carpeta tp-terminal al principio del script
+#Validar opciones de cada case, por ej si el sistema esta actualizado que te diga "Sistema act", con un IF
+#Ver porque al final del 4-3 solo me guarda ese punto en el log linux-functions.txt 
+#Hacer mas clear o bucles while para mejorar la visual al ejecutar el script
+#Mejorar los textos de echo
 
 opcion=0
 o1=0
@@ -6,8 +12,8 @@ o2=0
 o3=0
 o4=0
 
-clear
-mkdir tp-terminal-bootcamp && cd tp-terminal-bootcamp 
+mkdir $HOME/tp-terminal-bootcamp
+cd $HOME/tp-terminal-bootcamp
 
 solicitar_info () {
 read -n1 -p "Ingrese la opción correspondiente: " opcion
@@ -18,7 +24,7 @@ info_o () {
 echo "Eligió la opción $1..."
 sleep 2
 echo "En el siguiente menú tendrá sub-opciones para $2"
-sleep 5
+sleep 3
 echo "Seleccione una opción"
 echo "$3"
 echo "$4"
@@ -55,13 +61,13 @@ solicitar_info
        echo -e "\n"
        case $o1 in
        1)funcion_ejecucion
-       sudo apt update && sudo apt upgrade -y
+       (sudo apt update && sudo apt upgrade -y) | tee -a linux-functions.txt
        ;;
        2)funcion_ejecucion
-       sudo apt list --upgradable
+       sudo apt list --upgradable | tee -a linux-functions.txt
        ;;
        3)funcion_ejecucion
-       sudo apt clean && sudo apt autoremove
+       (sudo apt clean && sudo apt autoremove) | tee -a linux-functions.txt
        ;;
        esac
        ;;
@@ -69,62 +75,62 @@ solicitar_info
     2) info_o "2" "crear directorios/carpetas y comprimidos para backups" "1. Crear una carpeta y 2 archivos txt dentro del directorio actual" "2. Crear una segunda carpeta en el directorio actual" "3. Crear un Backup de Retos en formato comprimido, moverlo a backups-bootcamp-we y descomprimirlo"
        read -n1 -p "Ingrese: " o2
        case $o2 in
-       1)
-       mkdir linux-bootcamp-we && cd linux-bootcamp-we && touch linux-functions.txt history-linux.txt && cd .. 
+       1)funcion_ejecucion
+       mkdir linux-bootcamp-we && mv linux-functions.txt linux-bootcamp-we/ && touch linux-bootcamp-we/history-linux.txt 
        ;;
-       2) 
+       2)funcion_ejecucion
        mkdir backups-bootcamp-we
        ;;
-       3)
-       tar -cvzf backups-bootcamp-we/bkp.tar.gz -C /home/nata/shellcourse/Nata/Retos && tar -xvzf backups-bootcamp-we/bkp.tar.gz -C backups-bootcamp-we
+       3)funcion_ejecucion
+       (tar -cvzf backups-bootcamp-we/bkp.tar.gz /home/nata/shellcourse/Nata/Retos && tar -xvzf backups-bootcamp-we/bkp.tar.gz -C backups-bootcamp-we) | tee -a linux-bootcamp-we/linux-functions.txt
        esac
        ;;
 
     3) info_o "3" "obtener la hora del sistema, usuario, version de sistema operativo, kernel y demás" "1. Fecha y hora actual" "2. Directorio actual de trabajo" "3. Mi usuario e información Host, Kernel y Sistema Operativo" "4. Espacio disponible y en uso en el disco" "5. Mostrar los 3 procesos que mas RAM utilizan" "6. Mostrar el historial de comandos" "7. Mostrar el servidor/es que utiliza Google" 
        read -n1 -p "Ingrese: " o3
        case $o3 in
-       1)
-       date "+%d/%m/%Y %T"
+       1)funcion_ejecucion
+       date "+%d/%m/%Y %T" | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       2) 
-       pwd 
+       2)funcion_ejecucion
+       pwd | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       3)
-       whoami && uname -a
+       3)funcion_ejecucion
+       (whoami && uname -a | tee -a linux-bootcamp-we/linux-functions.txt) | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       4)
-       df -h
+       4)funcion_ejecucion
+       df -h | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       5)
-       ps -eo user,pid,%mem,stat --sort=-%mem | head -n 4
+       5)funcion_ejecucion
+       (ps -eo user,pid,%mem,stat --sort=-%mem | head -n 4) | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       6)
-       history > linux-bootcamp-we/history-linux.txt
+       6)funcion_ejecucion
+       (history > linux-bootcamp-we/history-linux.txt) | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       7)
-       ping google.com | head -n 4
+       7)funcion_ejecucion
+       (ping google.com | head -n 4) | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
        esac
        ;;
  
-    4) info_o "4" "" "1. Crear un comprimido de todo el directorio actual y guardarlo en 'backups-bootcamp-we'" "2. Descomprimir el archivo en la Home" "3. Mostrar el contenido de los archivos txt creados" "4. Listar el contenido de el archivo descomprimido en Home"
+    4) info_o "4" "crear Backups, mostrar información de archivos y listar la Home." "1. Crear un comprimido de todo el directorio actual y guardarlo en 'backups-bootcamp-we'" "2. Descomprimir el archivo en la Home/Documents" "3. Mostrar el contenido de los archivos txt creados" "4. Listar el contenido de el archivo descomprimido en Home"
        read -n1 -p "Ingrese: " o4
        case $o4 in
-       1)
-       tar -cvzf backups-bootcamp-we/tp-terminal-bootcamp.tar.gz . 
+       1)funcion_ejecucion
+       tar -cvzf backups-bootcamp-we/tp-terminal-bootcamp.tar.gz . | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       2)
-       cp backups-bootcamp-we/tp-terminal-bootcamp.tar.gz $HOME && cd $HOME && tar -xvzf tp-terminal-bootcamp.tar.gz .
+       2)funcion_ejecucion
+       tar -xvzf backups-bootcamp-we/tp-terminal-bootcamp.tar.gz -C $HOME/Documents | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       3)
-       cat functions.sh > linux-bootcamp-we/linux-functions.txt && cat linux-bootcamp-we/history-linux.txt
+       3)funcion_ejecucion
+       (cat linux-bootcamp-we/linux-functions.txt && cat linux-bootcamp-we/history-linux.txt) | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
-       4)
-       ls -l $HOME/tp-terminal-bootcamp
+       4)funcion_ejecucion
+       ls -l $HOME/tp-terminal-bootcamp | tee -a linux-bootcamp-we/linux-functions.txt
        ;;
        esac
        ;;
-    5) exit 1
+    5) exit 0
     ;;
     esac
 done
