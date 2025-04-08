@@ -1,6 +1,5 @@
 #!/bin/bash
 #Me falta: 
-#Valdar la creacion de la carpeta tp-terminal al principio del script
 #Validar opciones de cada case, por ej si el sistema esta actualizado que te diga "Sistema act", con un IF
 #Ver porque al final del 4-3 solo me guarda ese punto en el log linux-functions.txt 
 #Hacer mas clear o bucles while para mejorar la visual al ejecutar el script
@@ -12,64 +11,72 @@ o2=0
 o3=0
 o4=0
 
-mkdir $HOME/tp-terminal-bootcamp
+if [ -d "tp-terminal-bootcamp" ]; then
+    echo "El directorio ya fue creado"
+else 
+    mkdir $HOME/tp-terminal-bootcamp
+fi
+
 cd $HOME/tp-terminal-bootcamp
 
 solicitar_info () {
-read -n1 -p "Ingrese la opción correspondiente: " opcion
-echo -e "\n"
+    read -n1 -p "Ingrese la opción correspondiente: " opcion
+    echo -e "\n"
 }
 
 info_o () {
-echo "Eligió la opción $1..."
-sleep 2
-echo "En el siguiente menú tendrá sub-opciones para $2"
-sleep 3
-echo "Seleccione una opción"
-echo "$3"
-echo "$4"
-echo "$5"
-echo "$6"
-echo "$7"
-echo "$8"
-echo "$9"
+    echo "Eligió la opción $1..."
+    sleep 2
+    echo "En el siguiente menú tendrá sub-opciones para $2"
+    sleep 3
+    echo "Seleccione una opción"
+    echo "$3"
+    echo "$4"
+    echo "$5"
+    echo "$6"
+    echo "$7"
+    echo "$8"
+    echo "$9"
 }
 
 funcion_ejecucion () {
-echo "Ejecutando..."
-sleep 2
-echo -e "\n"
+    echo "Ejecutando..."
+    sleep 2
+    echo -e "\n"
 }
 
 while :
-do
-echo "*******Trabajo Práctico Linux y Bash*******"
-echo "*************Bienvenido $USER*************"
-echo "           Opciones disponibles:"
-echo -e "\n"
-echo "1. Actualización y limpieza del sistema"
-echo "2. Creación de directorios y respaldos"
-echo "3. Ver información del sistema"
-echo "4. Archivos y descompresión"
-echo "5. Salir"
-echo -e "\n"
-solicitar_info
-
+    do
+        
+        echo "*******Trabajo Práctico Linux y Bash*******"
+        echo "*************Bienvenido $USER*************"
+        echo "           Opciones disponibles:"
+        echo -e "\n"
+        echo "1. Actualización y limpieza del sistema"
+        echo "2. Creación de directorios y respaldos"
+        echo "3. Ver información del sistema"
+        echo "4. Archivos y descompresión"
+        echo "5. Salir"
+        echo "6. Leer el archivo Log 'linux-functions.txt'"
+        echo -e "\n"
+        solicitar_info
     case $opcion in
-    1) info_o "1" "limpiar y/o actualizar su sistema (Tenga en cuenta que precisará permisos de sudo)" "1. Actualizar el sistema" "2. Solicitar la lista de paquetes a actualizar" "3. Limpiar y remover los paquetes en desuso"  
-       read -n1 -p "Ingrese: " o1
-       echo -e "\n"
-       case $o1 in
-       1)funcion_ejecucion
-       (sudo apt update && sudo apt upgrade -y) | tee -a linux-functions.txt
-       ;;
-       2)funcion_ejecucion
-       sudo apt list --upgradable | tee -a linux-functions.txt
-       ;;
-       3)funcion_ejecucion
-       (sudo apt clean && sudo apt autoremove) | tee -a linux-functions.txt
-       ;;
-       esac
+    1) 
+        
+        info_o "1" "limpiar y/o actualizar su sistema (Tenga en cuenta que precisará permisos de sudo)" "1. Actualizar el sistema" "2. Solicitar la lista de paquetes a actualizar" "3. Limpiar y remover los paquetes en desuso"  
+        read -n1 -p "Ingrese: " o1
+        echo -e "\n"
+            case $o1 in
+            1)funcion_ejecucion
+            (sudo apt update && sudo apt upgrade -y) | tee -a linux-functions.txt
+            ;;
+            2)funcion_ejecucion
+            sudo apt list --upgradable | tee -a linux-functions.txt
+            ;;
+            3)funcion_ejecucion
+            (sudo apt clean && sudo apt autoremove) | tee -a linux-functions.txt
+            ;;
+            esac
        ;;
 
     2) info_o "2" "crear directorios/carpetas y comprimidos para backups" "1. Crear una carpeta y 2 archivos txt dentro del directorio actual" "2. Crear una segunda carpeta en el directorio actual" "3. Crear un Backup de Retos en formato comprimido, moverlo a backups-bootcamp-we y descomprimirlo"
@@ -131,6 +138,9 @@ solicitar_info
        esac
        ;;
     5) exit 0
+    ;;
+    6)
+       cat linux-functions.txt | less       
     ;;
     esac
 done
