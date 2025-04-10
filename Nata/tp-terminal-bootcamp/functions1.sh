@@ -6,6 +6,7 @@ o2=0
 o3=0
 o4=0
 
+
 if [ -d "tp-terminal-bootcamp" ]; then
     echo "El directorio ya fue creado"
 else 
@@ -170,8 +171,12 @@ while :
                 ;;
 
                 6)funcion_ejecucion
-                    history 20 | tee -a linux-bootcamp-we/history-linux.txt 
-
+                    
+                    if [ -f "linux-bootcamp-we/history-linux.txt" ]; then
+                        history 20 >> linux-bootcamp-we/history-linux.txt
+                    else
+                        continue 
+                    fi
                 ;;
 
                 7)funcion_ejecucion
