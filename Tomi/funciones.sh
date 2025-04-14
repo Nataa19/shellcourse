@@ -2,14 +2,15 @@
 # Trabajo practico de linux y bash
 # Autor: Tomás Mascia
 
+
 #---------------------------------- ACTUALIZAR -----------------------------------
 # Esta funcion actualiza el sistema.
 
 actualizar_sistema(){
     echo "Actualizando sistema..."
-    sudo apt update && sudo apt upgrade -y
+    sudo apt update && sudo apt upgrade -y | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -17,9 +18,9 @@ actualizar_sistema(){
 
 actualizar_paquetes_lista(){
     echo "Lista de paquetes para actualizar:"
-    sudo apt list --upgradable
+    sudo apt list --upgradable | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -27,20 +28,21 @@ actualizar_paquetes_lista(){
 
 limpiar_cache(){
     echo "Limpiando archivos no necesitados y no deseados..."
-    sudo apt clean && sudo apt autoremove
+    sudo apt clean && sudo apt autoremove | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
 #---------------------------------- CREAR --------------------------------------
+
 # Esta funcion crea un directorio 
 
 crear_directorio(){
     echo "Creando el directorio $1"
-    mkdir "$1"
+    mkdir "$1" | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -48,9 +50,9 @@ crear_directorio(){
 
 crear_archivo(){
     echo "Creando el archivo $1"
-    touch "$1"
+    touch "$1" | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -58,9 +60,9 @@ crear_archivo(){
 
 cd_directorio(){
     echo "Entrando al directorio $1"
-    cd "$1"
+    cd "$1" | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -68,9 +70,9 @@ cd_directorio(){
 
 copiar_archivo(){
     echo "Copiando el contenido de $1 y poniendolo en $2"
-    cp $1 $2
+    cp $1 $2 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -78,9 +80,9 @@ copiar_archivo(){
 
 comprime_archivos(){
     echo "Comprimiendo los archivos..."
-    tar -cvzf $1 $2
+    tar -cvzf $1 $2 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -88,9 +90,9 @@ comprime_archivos(){
 
 mover_archivos(){
     echo "Moviendo $1 a $2"
-    mv $1 $2
+    mv $1 $2 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -98,9 +100,9 @@ mover_archivos(){
 
 descomprime_archivos(){
     echo "Descomprimiendo los archivos..."
-    tar -xvzf $1
+    tar -xvzf $1 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -110,9 +112,9 @@ descomprime_archivos(){
 
 funcion_fecha(){
     echo "La fecha es: "
-    date "+%d/%m/%Y %T"
+    date "+%d/%m/%Y %T" | tee -a linux-functions.txt  
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar."
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -120,9 +122,9 @@ funcion_fecha(){
 
 ubicacion(){
     echo "La ubicacion es: "
-    pwd
+    pwd | tee -a linux-functions.txt 
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -130,9 +132,9 @@ ubicacion(){
 
 nombre_usuario(){
     echo "El nombre del usuario es:"
-    whoami
+    whoami | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p  "continuar..."
 }
 
 
@@ -140,18 +142,18 @@ nombre_usuario(){
 
 informacion_SO(){
     echo "El sistema Operativo y sus caracateristicas:"
-    uname -a
+    uname -a | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p "continuar..."
 }
 
 # Esta funcion muestra en pantalla el uso del disco
 
 info_disco(){
     echo "El uso del disco:"
-    df -h
+    df -h | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p "continuar..."
 }
 
 
@@ -159,19 +161,31 @@ info_disco(){
 
 mostrar_procesos(){
     echo "Los tres procesos con mayor consumo son:"
-    ps -eo user,pid,%mem,stat --sort=-%mem | head -n 4
+    ps -eo user,pid,%mem,stat --sort=-%mem | head -n 4 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p "continuar..."
 }
 
 
 # Esta funcion muestra en pantalla el historial de comandos y los guarda en /history-linux.txt
 
 guardar_historial(){
-    echo "El historial de comandos es el siguiente: "
-    history > linux-bootcamp-we/history-linux.txt
-    echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+
+    if [ -f history-linux.txt ]; then
+        history > history-linux.txt
+        echo "Se guardo todo en el archivo history-linux.txt"
+        read -n 1 -s -r -p "continuar..."
+    
+    else
+
+        touch history-linux.txt
+        history > history-linux.txt
+        echo -e "No se encontro pero ya lo creamos y guardamos la informacion de history dentro"
+        read -n 1 -s -r -p "continuar..."
+    fi
+    
+    mv history-linux.txt linux-bootcamp-we
+    
 }
 
 
@@ -179,9 +193,9 @@ guardar_historial(){
 
 google_servidores(){
     echo "LOs servidores de Google son: "
-    ping google.com | head -n 4
+    ping google.com | head -n 4 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p  "continuar..."
 }
 
 
@@ -189,16 +203,25 @@ google_servidores(){
 
 mostrar_lista_archivos(){
     echo "Lista de archivos:"
-    ls $1
+    ls $1 | tee -a linux-functions.txt
     echo -e "\n"
-    read -n 1 -s -r -p "Presione ENTER para continuar"
+    read -n 1 -s -r -p "continuar..."
 }
+
+
+
+# ENTRO DE LA CARPETA TP-TERMINAL-BOOTCAMP PARA TRABAJAR
+
+cd tp-terminal-bootcamp
 
 # Ahora voy a hacer un menu desplegable para que pueda el ususario pueda elegir lo que quiera hacer
 # MENU PRINCIPAL
 
 while :
 do
+
+
+
     # Limpiamos la pantalla para poder extender el menu desplegable
     clear
     # Desplegamos el menu principal
@@ -273,53 +296,65 @@ do
             case $opmenu2 in
            
             0)  break;;
-
+            
             1)  
                 
-                # Me fijo que exista el directorio y si no existe lo creo
+                # VALIDAMOS SI EXISTE EL DIRECTORIO LINUX-BOOTCAMP-WE
+                
                 if [ ! -d "linux-bootcamp-we" ]; then
-                    crear_directorio linux-bootcamp.we
+                    mkdir linux-bootcamp-we
                 else
                     echo "El directorio linux-bootcamp.we ya existe"
                 fi
                 
-                # Entro al directorio creado y valido si mi archivo existe o no
+                # ENTRO AL DIRECTORIO DE LINUX-BOOTCAMP-WE
 
-                cd_directorio linux-bootcamp.we
+                cd linux-bootcamp-we
                 
+                # DENTRO DE LINUX_BOOTCAMP-WE CREO UN ARCHIVO LINUX-FUNCIONS.TXT
+
                 if [ ! -f "linux-functions.txt" ]; then
-                    crear_archivo linux-functions.txt
+                    touch linux-functions.txt
                 else
                     echo "El archivo linux-functions.txt ya existe"
                 fi
 
-                # Entro al directorio creado y valido si mi archivo existe o no
+                # DENTRO TAMBIEN CREO EL ARCHIVO HISTORY-LINUX.TXT
                 
                 if [ ! -f "history-linux.txt" ]; then
-                    crear_archivo history-linux.txt
+                    touch history-linux.txt
                 else
                     echo "El archivo history-linux.txt ya existe"
                 
                 fi
-                # Vuelvo a la carpeta principal
+                
+                # VUELVO A LA CARPETA TP-TERMINAL
 
                 cd_directorio .. 
+
                 ;;
 
             2)  
-                
+                # VALIDAMOS SI EXISTE EL DIRECTORIO BACKUP-BOOTCAMP-WE
+
                 if [ ! -d "backup-bootcamp-we" ]; then
                     crear_directorio backup-bootcamp-we
                 else
-                    echo "El archivo backup-bootcamp-we ya existe"
+                    echo "El directorio backup-bootcamp-we ya existe"
+                    read -n 1 -s -p  "continuar..."
                 fi
                 ;;
+
             3)
-                
+                # COPIAMOS LA CARPETA DE RETOS DENTRO DE LA CARPETA DE BUCKUP-BOOTCAMP-WE
+
                 if [ -d "./backup-bootcamp-we" ]; then
-                    cp -r /home/tomi-mascia/Código/shellcourse/Tomi/Retos ./backups-bootcamp-we/
+                    cp -r /home/tomi-mascia/Código/shellcourse/Tomi/Bash/Retos ./backup-bootcamp-we/
+                    echo -e "Carpeta ya copiada en backup-bootcamp-we\n"
+                    read -n 1 -s -p "continuar..."
                 else
                     echo "La carpeta backups-bootcamp-we no existe"
+                    read -n 1 -s -p "continuar..."
                 fi
                 ;;
             *) 
@@ -351,17 +386,35 @@ do
 
             case $opmenu3 in
             0)break;;
+
             1)funcion_fecha;;
+            
             2)ubicacion;;
+            
             3)nombre_usuario;;
+            
             4)informacion_SO;;
+            
             5)info_disco;;
+            
             6)mostrar_procesos;;
-            7)guardiar_historial;;
+            
+            7)guardar_historial;;
+            
             8)google_servidores;;
+            
             *)echo -e "\n Opcion no valida";;
+            
             esac
-        done;;
+            
+            # MOVEMOS EL ARCHIVO LINUX-FUNCTIONS.TXT A LINUX-BOOTCAMP-WE
+           
+            mv linux-functions.txt linux-bootcamp-we
+        
+        done
+        
+        ;;
+    
     4)
     while :
     do
@@ -373,7 +426,8 @@ do
             echo "2_ Restaurar backup al HOME"
             echo "3_ Guardar funciones y mostrar historial"
             echo "4_ Listar backuops disponibles"
-            echo "0_ Volver al menu principal"
+            echo "0_ Volver al menu ion actualiza el sistema."
+
             read -n1 -p "Ingresar una opcion [0-4]: " opmenu4
 
             echo ""
@@ -383,41 +437,56 @@ do
             0)break ;;
             
             1)
-                if [ ! -d "backups-bootcamp-we" ]; then
-                    echo "La carpeta backups-bootcamp-we no existe, ahora la vamos a crear..."
-                    crear_directorio backups-bootcamp-we
-                fi
-                comprime_archivos backups-bootcamp-we/tp-terminal-bootcamp.tar.gz .
-                ;;
-            2)
-                if [ -f "backups-bootcamp-we/tp-terminal-bootcamp.tar.gz" ]; then
-                    copiar_archivo backups-bootcamp-we/tp-terminal-bootcamp.tar.gz $HOME
-                        cd_directorio$HOME
-                        decomprime_archivos tp-terminal-bootcamp.tar.gz .
+                if [ ! -d "backup-bootcamp-we" ]; then
+                    echo "La carpeta backup-bootcamp-we no existe, ahora la vamos a crear..."
+                    crear_directorio backup-bootcamp-we
                 else
-                    echo "No existe el archivo tp-terminal-bootcamp.tar.gz"
+                    continue
+                fi
+                
+                # COMPRIMIMOS LA CARPETA
+                
+                comprime_archivos ~/Código/shellcourse/Tomi/tp-terminal-bootcamp tp-terminal-bootcamp.tar.gz  
+                mv tp-terminal-bootcamp.tar.gz backup.bootcamp-we/
+                echo -e "La carpeta actual ya se comprimio\n"
+                read -n 1 -s -p "continuar..."
+
+                ;;
+            
+            2)
+                
+                if [ -f "backup-bootcamp-we/tp-terminal-bootcamp.tar.gz" ]; then
+                    copiar_archivo backup-bootcamp-we/tp-terminal-bootcamp.tar.gz $HOME
+                    cd_directorio $HOME
+                    decomprime_archivos tp-terminal-bootcamp.tar.gz .
+                    echo -e "El archivo ya se descomprimio en la HOME"
+                    read -n 1 -s -p "continuar..."
+
+                else
+                   
+                    echo -e "No existe el archivo tp-terminal-bootcamp.tar.gz\n"
+                    read -n 1 -s -p "continuar..."
+
                 fi 
                 ;;
+            
             3)
-                if [ -d "linux-bootcamp-we" ]; then
-                    cat functions.sh > linux-bootcamp-we/linux-functions.txt
-                echo "Se guardó el contenido de functions.sh en linux-functions.txt."
-                else
-                echo "El directorio linux-bootcamp-we no existe."
-                fi
-
-                if [ -f "linux-bootcamp-we/history-linux.txt" ]; then
+                cd_directorio linux-bootcamp-we
+               
+                if [ -f "history-linux.txt" ]; then
                     echo "Contenido de history-linux.txt: "
-                    cat linux-bootcamp-we/history-linux.txt
+                    cat history-linux.txt
                 else
                     echo "El archivo history-linux.txt no existe en linux-bootcamp-we"
                 fi
+
                 ;;
+                
             4)
                 if [ -d "backups-bootcamp-we" ]; then
-                    if [ "$(ls -A backups-bootcamp-we)" ]; then
+                    if [ "$(ls -A backup-bootcamp-we)" ]; then
                         echo "Archivos de backups-bootcamp-we: "
-                        ls backups-bootcamp.we/
+                        ls backup-bootcamp.we/
                         else
                             echo "El directorio backups-bootcamp-we esta vacio"
                     fi
